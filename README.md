@@ -45,5 +45,3 @@ This project is open-source and free to use.
 If you host this project using GitHub Pages, add the link here:
 🔗 Live Demo
 
-![Chat App Screenshot]
-https://raw.githubusercontent.com/chndn-coder/Chat-Application/main/assets/chat-app.png
