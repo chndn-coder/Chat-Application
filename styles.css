@@ -1,0 +1,91 @@
+body {
+    background: linear-gradient(135deg, #007BFF, #0056b3); /* Creates a blue gradient background */
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif; /* Sets the font to Poppins */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Centers content vertically and horizontally */
+}
+
+.container {
+    max-width: 700px;
+    padding: 25px;
+    background: rgb(62, 136, 159); /* Light blue container background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Adds a shadow effect */
+    text-align: center;
+}
+
+.hidden {
+    display: none; /* Hides elements when this class is applied */
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 600;
+    color: #070707; /* Dark text color */
+    margin-bottom: 15px; /* Adds space below the logo */
+}
+
+input, select, button {
+    width: 100%; /* Makes the elements full width */
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px;
+}
+
+button {
+    background: #0d0443; /* Dark blue button background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s; /* Smooth transition effect */
+}
+
+button:hover {
+    background: #d45550; /* Changes button color on hover */
+}
+
+/* Join Room Button - Dark Blue */
+#joinRoom {
+    background: #0056b3;
+    color: white;
+}
+
+#joinRoom:hover {
+    background: #003f7f; /* Darker shade on hover */
+}
+
+/* Chatbox Background - Grey */
+.messageArea {
+    margin-top: 20px;
+    border: 2px solid #ff6f61; /* Red border around the chat box */
+    border-radius: 8px;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto; /* Enables scrolling for long messages */
+    background: #e0e0e0; /* Light grey background */
+}
+
+.message {
+    background: #ffe5e0; /* Light red background for messages */
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px; /* Slightly rounded message boxes */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    text-align: left;
+}
+
+.username {
+    font-weight: bold;
+    color: #ff6f61; /* Red username text */
+}
+
+.timestamp {
+    font-size: 12px;
+    color: gray; /* Light gray timestamp */
+    margin-left: 10px; /* Adds space between message and timestamp */
+}

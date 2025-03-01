@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Linking external CSS file -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Optimizing font loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Adding Google Fonts -->
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">My ChatRoom</h1> <!-- Chat room title -->
+
+        <!-- Username Input Section (Initially Visible) -->
+        <div id="usernameContainer">
+            <input type="text" id="username" placeholder="Enter your name" required> <!-- Input for username -->
+            <button id="joinChat">Join Chat</button> <!-- Button to join the chat -->
+        </div>
+
+        <!-- Chat Room UI (Hidden Initially) -->
+        <div id="chatContainer" class="hidden"> <!-- This section is hidden until the user joins -->
+            <select id="roomSelect"> <!-- Dropdown to select a chat room -->
+                <option value="general">General</option>
+                <option value="technology">Technology</option>
+                <option value="gaming">Gaming</option>
+            </select>
+            <button id="joinRoom">Join Room</button> <!-- Button to join the selected room -->
+
+            <div class="messageArea" id="messageArea"></div> <!-- Area to display chat messages -->
+
+            <form id="form">
+                <input type="text" id="message" placeholder="Type your message..." required> <!-- Input for messages -->
+                <button type="submit">Send</button> <!-- Button to send messages -->
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script> <!-- Importing socket.io for real-time communication -->
+    <script>
+        let socket = io(); // Connecting to the socket server
+        let username;
+        let room = "general"; // Default room
+
+        document.getElementById("joinChat").addEventListener("click", () => {
+            username = document.getElementById("username").value.trim();
+            if (username) { 
+                document.getElementById("usernameContainer").classList.add("hidden"); // Hide username input
+                document.getElementById("chatContainer").classList.remove("hidden"); // Show chat room
+                socket.emit("join", { username, room }); // Inform server that a user joined
+            }
+        });
+
+        document.getElementById("joinRoom").addEventListener("click", () => {
+            let newRoom = document.getElementById("roomSelect").value;
+            if (newRoom !== room) { 
+                socket.emit("switchRoom", { username, newRoom }); // Inform server to switch rooms
+                room = newRoom;
+                document.getElementById("messageArea").innerHTML = ""; // Clear old messages
+            }
+        });
+
+        document.getElementById("form").addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent form from refreshing the page
+            let message = document.getElementById("message").value.trim();
+            if (message) { 
+                socket.emit("chat message", { username, text: message, room }); // Send message to server
+                document.getElementById("message").value = ""; // Clear input field after sending
+            }
+        });
+
+        socket.on("chat message", (data) => { // Listen for messages from server
+            let msgElement = document.createElement("div");
+            msgElement.classList.add("message");
+            msgElement.innerHTML = `<span class="username">${data.username}:</span> ${data.text} <span class="timestamp">${data.timestamp}</span>`;
+            document.getElementById("messageArea").appendChild(msgElement); // Add message to chat
+            document.getElementById("messageArea").scrollTop = document.getElementById("messageArea").scrollHeight; // Auto-scroll to latest message
+        });
+    </script>
+</body>
+</html>
